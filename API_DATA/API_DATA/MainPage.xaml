@@ -4,11 +4,16 @@
              xmlns:vm="clr-namespace:API_DATA.ViewModels" 
              xmlns:PanCake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Name="MyListPage"
              x:Class="API_DATA.MainPage">
     <ContentPage.BindingContext>
         <vm:UserViewModel/>
     </ContentPage.BindingContext>
-
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <SearchBar
@@ -28,6 +33,15 @@
                       RefreshControlColor="red"
                       RefreshCommand="{Binding RefreshCommand}"
                       Margin="10">
+                <!--List View Behavior-->
+                <ListView.Behaviors>
+                    <xct:EventToCommandBehavior
+                        
+                        EventName="ItemSelected"
+                        Command="{Binding Source={x:Reference MyListPage}, Path=BindingContext.DetailCommand}" 
+                        EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}"
+                        />
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

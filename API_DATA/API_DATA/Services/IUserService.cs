@@ -12,7 +12,9 @@ namespace API_DATA.Services
         Task RefreshDataAsync();
         Task SaveTodoItemAsync(UserData item, bool isNewItem = false);
         Task UpdateTodoItemAsync(UserData item, bool isNewItem = false);
-        Task DeleteTodoItemAsync(string id);
+        Task DeleteTodoItemAsync(UserData item);
         ObservableCollection<UserData> userDatas { get; set; }
+        UserData userTerpilih { get; set; }
+        void PilihanUser(UserData user);
     }
 }

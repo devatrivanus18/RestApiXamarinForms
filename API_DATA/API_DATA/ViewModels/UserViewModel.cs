@@ -1,5 +1,6 @@
 ﻿using API_DATA.Models;
 using API_DATA.Services;
+using API_DATA.Views;
 using MvvmHelpers;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,21 @@ namespace API_DATA.ViewModels
         IUserService userService;
         public ICommand SearchCommand { get; }
         public ICommand RefreshCommand { get; }
+        public ICommand DetailCommand { get; }
         public UserViewModel()
         {
             userService = DependencyService.Get<IUserService>();
             GetData();
             SearchCommand = new Command<object>(SearchData);
             RefreshCommand = new Command<object>(RefreshData);
+            DetailCommand = new Command<object>(SelectedItem);
+        }
+
+        private void SelectedItem(object obj)
+        {
+            var data = obj as UserData;
+            userService.PilihanUser(data);
+            Application.Current.MainPage.Navigation.PushAsync(new DetailUserPage());
         }
 
         private async void RefreshData(object obj)

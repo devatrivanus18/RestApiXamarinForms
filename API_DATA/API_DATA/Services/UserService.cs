@@ -20,13 +20,33 @@ namespace API_DATA.Services
 
         private ObservableCollection<UserData> _userData;
         public ObservableCollection<UserData> userDatas { get=>_userData; set=>SetProperty(ref _userData,value); }
+        private UserData _userterpilih;
+        public UserData userTerpilih { get => _userterpilih; set => SetProperty(ref _userterpilih,value); }
+
         public UserService()
         {
             RefreshDataAsync();
         }
-        public Task DeleteTodoItemAsync(string id)
+        public async Task DeleteTodoItemAsync(UserData data)
         {
-            throw new NotImplementedException();
+            
+            try
+            {
+                string id = data.Id;
+                Uri uri = new Uri(string.Format($"{url}/{id}"));
+                HttpResponseMessage response = await httpClient.DeleteAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    userDatas.Remove(data);
+                    await Application.Current.MainPage.DisplayAlert("PESAN", $"{data.Username} Sudah Dihapus", "OK");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ex.Message.ToString();
+            }
+
         }
 
         public async Task RefreshDataAsync()
@@ -44,6 +64,11 @@ namespace API_DATA.Services
         public Task UpdateTodoItemAsync(UserData item, bool isNewItem = false)
         {
             throw new NotImplementedException();
+        }
+
+        public void PilihanUser(UserData user)
+        {
+            userTerpilih = user;
         }
     }
 }

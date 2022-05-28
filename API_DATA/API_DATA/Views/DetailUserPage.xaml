@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:vm="clr-namespace:API_DATA.ViewModels"
+             x:Class="API_DATA.Views.DetailUserPage">
+    <ContentPage.BindingContext>
+        <vm:UserDetailViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+            <Frame>
+            <StackLayout>
+                <Label Text="{Binding userData.Username}"
+                   FontSize="26"
+                VerticalOptions="Center" 
+                HorizontalOptions="Center" />
+                <Image HeightRequest="300" Source="{Binding userData.Image}"/>
+                <Button Text="Delete" Command="{Binding DeleteCommand}"/>
+            </StackLayout>
+        </Frame>
+    </ContentPage.Content>
+</ContentPage>
