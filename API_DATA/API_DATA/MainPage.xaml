@@ -23,6 +23,10 @@
             </SearchBar>
             <ListView ItemsSource="{Binding userDatas}"
                       HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefresh}"
+                      RefreshControlColor="red"
+                      RefreshCommand="{Binding RefreshCommand}"
                       Margin="10">
                 <ListView.ItemTemplate>
                     <DataTemplate>

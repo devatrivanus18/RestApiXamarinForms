@@ -22,15 +22,32 @@ namespace API_DATA.ViewModels
             set => SetProperty(ref _SearchText, value);
         }
 
+        private bool _isrefresh = false;
+
+        public bool IsRefresh
+        {
+            get => _isrefresh;
+            set => SetProperty(ref _isrefresh, value);
+        }
+
         private ObservableCollection<UserData> _userData;
         public ObservableCollection<UserData> userDatas { get => _userData; set => SetProperty(ref _userData, value); }
         IUserService userService;
         public ICommand SearchCommand { get; }
+        public ICommand RefreshCommand { get; }
         public UserViewModel()
         {
             userService = DependencyService.Get<IUserService>();
             GetData();
             SearchCommand = new Command<object>(SearchData);
+            RefreshCommand = new Command<object>(RefreshData);
+        }
+
+        private async void RefreshData(object obj)
+        {
+            await userService.RefreshDataAsync();
+            userDatas = userService.userDatas;
+            IsRefresh = false;
         }
 
         async void GetData()
