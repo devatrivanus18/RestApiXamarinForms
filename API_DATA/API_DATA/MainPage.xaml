@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:API_DATA.ViewModels" 
+             xmlns:PanCake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" 
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="API_DATA.MainPage">
+    <ContentPage.BindingContext>
+        <vm:UserViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <SearchBar
+                Text="{Binding SearchText}"
+                Placeholder="Filter Data Disini [cari by Nama]"
+                x:Name="SearchText">
+                <SearchBar.Behaviors>
+                    <xct:UserStoppedTypingBehavior
+                      Command="{Binding SearchCommand}"
+                        />
+                </SearchBar.Behaviors>
+            </SearchBar>
+            <ListView ItemsSource="{Binding userDatas}"
+                      HasUnevenRows="True"
+                      Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Margin="10"
+                                   BackgroundColor="Wheat"
+                                   CornerRadius="15"
+                                   BorderColor="WhiteSmoke">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="5*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image  Grid.Column="0"
+                                                Grid.RowSpan="5"
+                                                Source="{Binding Image}" 
+                                                Aspect="AspectFit"
+                                                HorizontalOptions="Start"
+                                                VerticalOptions="Center"
+                                                HeightRequest="100" 
+                                                WidthRequest="100">
+                                        <Image.Clip>
+                                        <EllipseGeometry Center="50,60" RadiusX="40"  RadiusY="40" />
+                                        </Image.Clip>
+                                    </Image>
+                                    <Label  Grid.Column="1"
+                                                Text="{Binding  Username}" 
+                                                FontAttributes="Bold"
+                                                FontSize="18"
+                                                LineBreakMode="TailTruncation" />
+                                        <Label  Grid.Column="1"
+                                                Grid.Row="1"
+                                                Text="{Binding Email}"
+                                                LineBreakMode="TailTruncation"
+                                                FontAttributes="Italic" 
+                                                VerticalOptions="End" />
+                                        <Label  Grid.Column="1"
+                                                Grid.Row="2"
+                                                Text="{Binding Phone}"
+                                                LineBreakMode="TailTruncation"
+                                                FontAttributes="Italic" 
+                                                VerticalOptions="End" />
+                                        <Label  Grid.Column="1"
+                                                Grid.Row="3"
+                                                Text="{Binding Birth}"
+                                                LineBreakMode="TailTruncation"
+                                                FontAttributes="Italic" 
+                                                VerticalOptions="End" />
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
